@@ -1,8 +1,12 @@
-{{ if eq (getenv "HUGO_ENV") "production" -}}
-  <script src="/docs/{{ .Site.Params.docs_version }}/dist/js/bootstrap.bundle.min.js" integrity="{{ .Site.Params.cdn.js_bundle_hash }}" crossorigin="anonymous"></script>
-{{ else -}}
-  <script src="/docs/{{ .Site.Params.docs_version }}/dist/js/bootstrap.bundle.js"></script>
-{{- end }}
+{{- $js_filename := "bootstrap.bundle.js" -}}
+
+{{- if eq (getenv "HUGO_ENV") "production" -}}
+{{- $js_filename = "bootstrap.bundle.min.js" -}}
+{{- end -}}
+
+{{- $js := resources.Get (printf "docs/%s/dist/js/%s" $.Site.Params.docs_version $js_filename) -}}
+
+<script src="{{ $js.RelPermalink }}" integrity="{{ ($js | fingerprint "sha384").Data.Integrity }}" crossorigin="anonymous"></script>
 
 {{ if (or (eq .Page.Layout "docs") (eq .Page.Layout "single")) -}}
 <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>

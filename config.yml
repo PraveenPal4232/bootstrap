@@ -22,6 +22,8 @@ publishDir:             "_gh_pages"
 module:
   mounts:
     - source:           dist
+      target:           assets/docs/4.3/dist
+    - source:           dist
       target:           static/docs/4.3/dist
     - source:           site/content
       target:           content

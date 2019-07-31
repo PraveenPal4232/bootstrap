@@ -1,9 +1,13 @@
+{{- $css_filename := "bootstrap.css" -}}
+
+{{- if eq (getenv "HUGO_ENV") "production" -}}
+{{- $css_filename = "bootstrap.min.css" -}}
+{{- end -}}
+
+{{- $css := resources.Get (printf "docs/%s/dist/css/%s" $.Site.Params.docs_version $css_filename) -}}
+
 {{- "<!-- Bootstrap core CSS -->" | safeHTML }}
-{{ if eq (getenv "HUGO_ENV") "production" -}}
-<link href="/docs/{{ .Site.Params.docs_version }}/dist/css/bootstrap.min.css" rel="stylesheet" integrity="{{ .Site.Params.cdn.css_hash }}" crossorigin="anonymous">
-{{- else -}}
-<link href="/docs/{{ .Site.Params.docs_version }}/dist/css/bootstrap.css" rel="stylesheet">
-{{- end }}
+<link href="{{ $css.RelPermalink }}" rel="stylesheet" integrity="{{ ($css | fingerprint "sha384").Data.Integrity }}" crossorigin="anonymous">
 
 {{ if (or (eq .Page.Layout "docs") (eq .Page.Layout "single")) -}}
 {{- "<!-- Documentation extras -->" | safeHTML }}
