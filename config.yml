@@ -21,19 +21,23 @@ publishDir:             "_gh_pages"
 
 module:
   mounts:
-    - source:           dist
-      target:           static/docs/4.3/dist
     - source:           site/content
       target:           content
+    - source:           site/content/docs
+      target:           content/docs/4.3
     - source:           site/data
       target:           data
     - source:           site/layouts
       target:           layouts
     - source:           site/static
       target:           static
-    - source:           site/static/docs/4.3/assets/img/favicons/favicon.ico
+    - source:           site/static/assets
+      target:           static/docs/4.3/assets
+    - source:           dist
+      target:           static/docs/4.3/dist
+    - source:           site/static/assets/img/favicons/favicon.ico
       target:           static/favicon.ico
-    - source:           site/static/docs/4.3/assets/img/favicons/apple-touch-icon.png
+    - source:           site/static/assets/img/favicons/apple-touch-icon.png
       target:           static/apple-touch-icon.png
 
 params:
